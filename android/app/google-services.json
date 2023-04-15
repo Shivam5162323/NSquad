@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "49201093823",
+    "project_id": "nsquad-5ebea",
+    "storage_bucket": "nsquad-5ebea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49201093823:android:ee3b08fd7330d18419fa0a",
+        "android_client_info": {
+          "package_name": "com.example.nsquad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49201093823-100jq95fen8pu9l3jaaack85j5f23p1r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsogAc8n4yT9sD5xUqyJLQREpo_Ben_lI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49201093823-100jq95fen8pu9l3jaaack85j5f23p1r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
