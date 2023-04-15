@@ -159,7 +159,7 @@ class _adState extends State<ad> {
                           tileColor: Color(0xFFF272e38),
                           shape: RoundedRectangleBorder(
 
-                            borderRadius: BorderRadius.circular(7),
+                            borderRadius: BorderRadius.vertical(bottom: Radius.circular(7)),
 
                           ),
                           onTap: (){

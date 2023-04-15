@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nsquad/viewdetails.dart';
 
 
 
@@ -90,7 +91,7 @@ class _ViewDogsScreenState extends State<ViewDogsScreen> {
 
 
               return Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
+                  margin: EdgeInsets.only(top: 10),
                   // color: Color(0xFFF062121),
                   // color: Colors.pink,
                   child:
@@ -141,6 +142,8 @@ class _ViewDogsScreenState extends State<ViewDogsScreen> {
 
 
 
+
+
                         ListTile(
                           leading: url==''?
 
@@ -169,6 +172,7 @@ class _ViewDogsScreenState extends State<ViewDogsScreen> {
                           ),
                           onTap: (){
 
+                            url==''?null:Navigator.of(context).push(MaterialPageRoute(builder: (context) => ViewDetails( url, date, description, name,phone,location)));
                           },
 
                           title: Text(

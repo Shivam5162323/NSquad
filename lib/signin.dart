@@ -1,27 +1,31 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'signup.dart';
+import 'package:nsquad/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Signin extends StatefulWidget {
+import 'authHome.dart';
+import 'loginModer.dart';
 
+class SignInScreen extends StatefulWidget {
 
   @override
-  State<Signin> createState() => _SigninState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SigninState extends State<Signin> {
-
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+class _SignInScreenState extends State<SignInScreen> {
   bool _obscureText = true;
 
   final _email = TextEditingController();
 
   final _password = TextEditingController();
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
-
-
     final emailField = TextFormField(
       controller: _email,
       autofocus: false,
@@ -40,7 +44,7 @@ class _SigninState extends State<Signin> {
           Icons.mail_lock,
           color: Colors.white,
         ),
-        hintText: 'email',
+        hintText: 'mail id',
         hintStyle: TextStyle(color: Colors.white70),
 
         enabledBorder: UnderlineInputBorder(
@@ -55,6 +59,12 @@ class _SigninState extends State<Signin> {
 
 
     );
+
+
+
+
+
+
 
 
 
@@ -105,6 +115,12 @@ class _SigninState extends State<Signin> {
 
 
 
+
+
+
+
+
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -140,12 +156,46 @@ class _SigninState extends State<Signin> {
                                 children: [
 
                                   Icon(Icons.login,color: Colors.white,size: 27,),
-                                  Text(' Sign in',style: TextStyle(fontSize: 34, color: Colors.white,fontFamily: 'dyna'),),
+                                  Text(' Sign in ',style: TextStyle(fontSize: 24,color: Colors.white ,fontWeight: FontWeight.bold,fontFamily: 'Zen'),),
                                 ],
                               )),
-
+                          // TextField(
+                          //   keyboardType: TextInputType.emailAddress,
+                          //   decoration: InputDecoration(
+                          //     prefixIcon: Icon(
+                          //       Icons.mail_lock,
+                          //       color: Colors.white,
+                          //     ),
+                          //     hintText: 'abc@cuchd.in',
+                          //     enabledBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.white),
+                          //     ),
+                          //     focusedBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.cyan),
+                          //     ),
+                          //   ),
+                          //   cursorColor: Colors.white,
+                          //   style: TextStyle(color: Colors.white),
+                          // ),
                           emailField,
-
+                          // TextField(
+                          //   obscureText: true,
+                          //   decoration: InputDecoration(
+                          //     prefixIcon: Icon(
+                          //       Icons.lock_open_outlined,
+                          //       color: Colors.white,
+                          //     ),
+                          //     hintText: 'Password',
+                          //     enabledBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.white),
+                          //     ),
+                          //     focusedBorder: UnderlineInputBorder(
+                          //       borderSide: BorderSide(color: Colors.cyan),
+                          //     ),
+                          //   ),
+                          //   cursorColor: Colors.white,
+                          //   style: TextStyle(color: Colors.white),
+                          // ),
                           passwordField,
                           Align(
                             alignment: Alignment.centerRight,
@@ -159,14 +209,79 @@ class _SigninState extends State<Signin> {
                             width: double.infinity,
                             child: ElevatedButton(
                               onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
 
+                                  dynamic result = await _auth.signInEmailPassword(LoginUser(email: _email.text,password: _password.text));
+                                  if (result.uid == null) { //null means unsuccessfull authentication
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return AlertDialog(
+                                            content: Text(result.code),
+                                          );
+                                        });
+
+                                  }
+                                  else{
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                                    prefs.setString('email', _email.text);
+                                    print(_email.text);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                MyHomePage()));
+                                  }
+                                }
                               },
-                              child: Text('Sign up'),
+                              child: Text('Sign in'),
                               //     child: loginEmailPasswordButon,
                             ),
                           ),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 18),
+                            child: Row(
+
+                                children: <Widget>[
+                                  Expanded(
+                                      child: Divider(color: Colors.white,)
+                                  ),
+
+                                  Text("  or  ",style: TextStyle(color: Colors.white),),
+
+                                  Expanded(
+                                      child: Divider(color: Colors.white,)
+                                  ),
+                                ]
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('New User?'),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: SizedBox(
+                              width: double.infinity,
+
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SignUpScreen()));
+                                },
+                                child: Text('Sign up !!',),
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(side: BorderSide(color: Colors.white)),
+                                  backgroundColor: Colors.black87,
 
 
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     )),
@@ -177,8 +292,5 @@ class _SigninState extends State<Signin> {
         ),
       ),
     );
-
-
-
   }
 }

@@ -28,7 +28,7 @@ class _AdoptState extends State<Adopt> {
 
             unselectedLabelColor: Colors.grey,
             dividerColor: Colors.black,
-            indicatorColor: Colors.black54,
+            indicatorColor: Colors.grey,
 
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
             unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal),
